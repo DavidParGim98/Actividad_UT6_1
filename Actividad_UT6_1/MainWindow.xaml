@@ -6,23 +6,147 @@
         xmlns:local="clr-namespace:Actividad_UT6_1"
         mc:Ignorable="d"
         Title="ChatBot" Height="600" Width="350" Icon="assets/robot.ico">
+    
+    <!-- Commandos -->
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CommandMenu.Nueva"
+                        Executed="Nueva_Executed"
+                        CanExecute="Nueva_CanExecute"/>
+        
+        <CommandBinding Command="local:CommandMenu.Guardar"
+                        Executed="Guardar_Executed"
+                        CanExecute="Guardar_CanExecute"/>
+        
+        <CommandBinding Command="local:CommandMenu.Salir"
+                        Executed="Salir_Executed"
+                        CanExecute="Salir_CanExecute"/>
+
+        <CommandBinding Command="local:CommandMenu.Configuracion"
+                        Executed="Configuracion_Executed"
+                        CanExecute="Configuracion_CanExecute"/>
+        
+        <CommandBinding Command="local:CommandMenu.Conexion"
+                        Executed="Conexion_Executed"
+                        CanExecute="Conexion_CanExecute"/>
+    </Window.CommandBindings>
+    
+    <!-- Estilos -->
+    <Window.Resources>
+        <ControlTemplate x:Key="MessageBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="border" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>            
+        </ControlTemplate>
+
+        <DataTemplate DataType="{x:Type local:Usuario}">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Top">
+                    <Image Source="assets/hombre.png" />
+                </DockPanel>
+            </DockPanel>
+        </DataTemplate>
+
+        <Style TargetType="Border" x:Key="BoxTrigger">
+            <Setter Property="BorderBrush" Value="Black" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                </Trigger>
+                
+                <!-- Falta que se quede azul cuando el cursor sigue dentro del border -->
+                
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Image">
+            <Setter Property="Width" Value="35" />
+        </Style>
+    </Window.Resources>
+    
+    <!-- Interfaz app -->
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem>
-                
+            <MenuItem Header="_Archivo">
+                <MenuItem Header="Nueva conversación" InputGestureText="Ctrl+N">
+                    <MenuItem.Icon >
+                        <Image Source="assets/new.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Guardar conversación..." InputGestureText="Ctrl+G">
+                    <MenuItem.Icon >
+                        <Image Source="assets/save.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+
+                <MenuItem Header="Salir" InputGestureText="Ctrl+S">
+                    <MenuItem.Icon >
+                        <Image Source="assets/exit.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+            </MenuItem>
+
+            <MenuItem Header="_Herramientas">
+                <MenuItem Header="Configuración..." InputGestureText="Ctrl+C" IsEnabled="False">
+                    <MenuItem.Icon >
+                        <Image Source="assets/config.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Comprobar conexión" InputGestureText="Ctrl+O">
+                    <MenuItem.Icon >
+                        <Image Source="assets/check.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
-        
+
         <ToolBarTray DockPanel.Dock="Top">
-            
+            <ToolBar>
+                <Button ToolTip="Nueva conversación" Command="local:CommandMenu.Nueva">
+                    <Image Width="35" Source="assets/new.png" />
+                </Button>
+
+                <Button ToolTip="Guardar conversación" Command="local:CommandMenu.Guardar">
+                    <Image Source="assets/save.png" />
+                </Button>
+
+                <Separator />
+
+                <Button ToolTip="Configuración" Command="local:CommandMenu.Configuracion" IsEnabled="False">
+                    <Image Source="assets/config.ico" />
+                </Button>
+
+                <Button ToolTip="Comprobar conexión" Command="local:CommandMenu.Conexion">
+                    <Image Source="assets/check.png" />
+                </Button>
+
+                <Separator />
+
+                <Button ToolTip="Salir" Command="local:CommandMenu.Salir">
+                    <Image Source="assets/exit.ico" />
+                </Button>
+            </ToolBar>
         </ToolBarTray>
-        
+
         <DockPanel DockPanel.Dock="Bottom">
+            <Image Source="assets/send.png" DockPanel.Dock="Right"/>
             
+            <Border BorderThickness="2" DockPanel.Dock="Left" Style="{StaticResource BoxTrigger}">
+                <TextBox Margin="5" Template="{DynamicResource MessageBox}" />
+            </Border>
         </DockPanel>
-        
-        <ItemsControl Background="LightGoldenrodYellow">
-            
+
+        <ItemsControl Background="LightGoldenrodYellow" ItemsSource="{Binding}" x:Name="Chat"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel></WrapPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
         </ItemsControl>
     </DockPanel>
 </Window>
