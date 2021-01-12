@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Actividad_UT6_1
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Usuario> conversacion = new List<Usuario>();
+        ObservableCollection<Usuario> conversacion = new ObservableCollection<Usuario>();
 
         public MainWindow()
         {
@@ -33,19 +34,19 @@ namespace Actividad_UT6_1
 
         private void Nueva_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            conversacion = new List<Usuario>();
+            conversacion = new ObservableCollection<Usuario>();
         }
 
         private void Nueva_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (Chat.HasItems)
+            /*if (Chat.HasItems)
             {
                 e.CanExecute = true;
             }
             else 
             {
                 e.CanExecute = false;
-            }
+            }*/
 
         }
 
@@ -60,14 +61,14 @@ namespace Actividad_UT6_1
 
         private void Guardar_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (Chat.HasItems)
+            /*if (Chat.HasItems)
             {
                 e.CanExecute = true;
             }
             else
             {
                 e.CanExecute = false;
-            }
+            }*/
 
         }
 
@@ -99,6 +100,21 @@ namespace Actividad_UT6_1
         private void Conexion_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+
+        private void Enviar_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChatBox.Text.Length > 0)
+            {
+                Usuario u = new Usuario("assets/hombre.png" ,ChatBox.Text);
+                Usuario robot = new Usuario("assets/robot.png", "No tengo ganas de hablar ahora");
+
+                ChatBox.Text = "";
+
+                conversacion.Add(u);
+                conversacion.Add(robot);
+            }
+            
         }
     }
 }

@@ -30,7 +30,9 @@
                         CanExecute="Conexion_CanExecute"/>
     </Window.CommandBindings>
     
-    <!-- Estilos -->
+    <!-- Estilos y Plantillas -->
+
+    <!-- Plantillas -->
     <Window.Resources>
         <ControlTemplate x:Key="MessageBox" TargetType="{x:Type TextBox}">
             <Border x:Name="border" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
@@ -39,13 +41,20 @@
         </ControlTemplate>
 
         <DataTemplate DataType="{x:Type local:Usuario}">
-            <DockPanel>
-                <DockPanel DockPanel.Dock="Top">
-                    <Image Source="assets/hombre.png" />
+            <Border BorderBrush="Black" BorderThickness="1">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                        <Image Source="{Binding Imagen}" DockPanel.Dock="Left" />
+                        <TextBlock Text="{Binding Nombre}" DockPanel.Dock="Right" />
+                    </DockPanel>
+                    
+                    <TextBlock Text="{Binding Mensaje}" />
                 </DockPanel>
-            </DockPanel>
+            </Border>
+            
         </DataTemplate>
 
+        <!-- Estilos -->
         <Style TargetType="Border" x:Key="BoxTrigger">
             <Setter Property="BorderBrush" Value="Black" />
             <Style.Triggers>
@@ -65,15 +74,17 @@
     
     <!-- Interfaz app -->
     <DockPanel>
+        
+        <!-- Menu -->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Archivo">
-                <MenuItem Header="Nueva conversación" InputGestureText="Ctrl+N">
+                <MenuItem Header="Nueva conversación" InputGestureText="Ctrl+N" Command="local:CommandMenu.Nueva">
                     <MenuItem.Icon >
                         <Image Source="assets/new.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Guardar conversación..." InputGestureText="Ctrl+G">
+                <MenuItem Header="Guardar conversación..." InputGestureText="Ctrl+G" Command="local:CommandMenu.Guardar">
                     <MenuItem.Icon >
                         <Image Source="assets/save.png"/>
                     </MenuItem.Icon>
@@ -81,7 +92,7 @@
 
                 <Separator />
 
-                <MenuItem Header="Salir" InputGestureText="Ctrl+S">
+                <MenuItem Header="Salir" InputGestureText="Ctrl+S" Command="local:CommandMenu.Salir">
                     <MenuItem.Icon >
                         <Image Source="assets/exit.ico"/>
                     </MenuItem.Icon>
@@ -90,13 +101,13 @@
             </MenuItem>
 
             <MenuItem Header="_Herramientas">
-                <MenuItem Header="Configuración..." InputGestureText="Ctrl+C" IsEnabled="False">
+                <MenuItem Header="Configuración..." InputGestureText="Ctrl+C" IsEnabled="False" Command="local:CommandMenu.Configuracion">
                     <MenuItem.Icon >
                         <Image Source="assets/config.ico"/>
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Comprobar conexión" InputGestureText="Ctrl+O">
+                <MenuItem Header="Comprobar conexión" InputGestureText="Ctrl+O" Command="local:CommandMenu.Conexion">
                     <MenuItem.Icon >
                         <Image Source="assets/check.png"/>
                     </MenuItem.Icon>
@@ -104,6 +115,7 @@
             </MenuItem>
         </Menu>
 
+        <!-- Toolbar -->
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
                 <Button ToolTip="Nueva conversación" Command="local:CommandMenu.Nueva">
@@ -132,14 +144,19 @@
             </ToolBar>
         </ToolBarTray>
 
+        <!-- ChatBox -->
         <DockPanel DockPanel.Dock="Bottom">
-            <Image Source="assets/send.png" DockPanel.Dock="Right"/>
+            <Button DockPanel.Dock="Right" Click="Enviar_Click">
+                <Image Source="assets/send.png" />
+            </Button>
+            
             
             <Border BorderThickness="2" DockPanel.Dock="Left" Style="{StaticResource BoxTrigger}">
-                <TextBox Margin="5" Template="{DynamicResource MessageBox}" />
+                <TextBox Margin="5" x:Name="ChatBox" Template="{DynamicResource MessageBox}" />
             </Border>
         </DockPanel>
 
+        <!-- Zona mensajes -->
         <ItemsControl Background="LightGoldenrodYellow" ItemsSource="{Binding}" x:Name="Chat"
                       ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ItemsControl.ItemTemplate>

@@ -48,15 +48,15 @@ namespace Actividad_UT6_1
                 if (this._mensaje != value)
                 {
                     this._mensaje = value;
-                    this.NotifyPropertyChanged("Tipo");
+                    this.NotifyPropertyChanged("Mensaje");
                 }
             }
         }
 
-        public Usuario(string mensaje)
+        public Usuario(string imagen, string mensaje)
         {
             Nombre = "Usuario";
-            Imagen = "assets/hombre.png";
+            Imagen = imagen;
             Mensaje = mensaje;
         }
 
