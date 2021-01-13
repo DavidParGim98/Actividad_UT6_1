@@ -39,14 +39,14 @@ namespace Actividad_UT6_1
 
         private void Nueva_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            /*if (Chat.HasItems)
+            if (Chat!=null)
             {
                 e.CanExecute = true;
             }
             else 
             {
                 e.CanExecute = false;
-            }*/
+            }
 
         }
 
@@ -61,14 +61,14 @@ namespace Actividad_UT6_1
 
         private void Guardar_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            /*if (Chat.HasItems)
+            if (Chat != null)
             {
                 e.CanExecute = true;
             }
             else
             {
                 e.CanExecute = false;
-            }*/
+            }
 
         }
 
@@ -106,13 +106,10 @@ namespace Actividad_UT6_1
         {
             if (ChatBox.Text.Length > 0)
             {
-                Usuario u = new Usuario("assets/hombre.png" ,ChatBox.Text);
-                Usuario robot = new Usuario("assets/robot.png", "No tengo ganas de hablar ahora");
+                conversacion.Add(new Usuario("assets/hombre.png", ChatBox.Text));
+                conversacion.Add(new Usuario("assets/robot.png", "No tengo ganas de hablar ahora"));
 
                 ChatBox.Text = "";
-
-                conversacion.Add(u);
-                conversacion.Add(robot);
             }
             
         }

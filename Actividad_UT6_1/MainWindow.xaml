@@ -50,9 +50,8 @@
                     
                     <TextBlock Text="{Binding Mensaje}" />
                 </DockPanel>
-            </Border>
-            
-        </DataTemplate>
+            </Border>            
+        </DataTemplate> 
 
         <!-- Estilos -->
         <Style TargetType="Border" x:Key="BoxTrigger">
@@ -157,13 +156,9 @@
         </DockPanel>
 
         <!-- Zona mensajes -->
-        <ItemsControl Background="LightGoldenrodYellow" ItemsSource="{Binding}" x:Name="Chat"
+        <ItemsControl Background="LightGoldenrodYellow" x:Name="Chat" ItemsSource="{Binding}" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel></WrapPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+            
         </ItemsControl>
     </DockPanel>
 </Window>
