@@ -34,7 +34,10 @@ namespace Actividad_UT6_1
 
         private void Nueva_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            nuevaOpcion.IsEnabled = false;
+            nuevaButton.IsEnabled = false;
             conversacion = new ObservableCollection<Usuario>();
+            Chat.DataContext = conversacion;
         }
 
         private void Nueva_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -51,12 +54,14 @@ namespace Actividad_UT6_1
         }
 
         private void Guardar_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
+        {       
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                //Falta implemetar
+            saveFileDialog.Filter = "Txt file (*.txt)|*.txt";
+            if (saveFileDialog.ShowDialog() == true) {
+
+                File.WriteAllText(saveFileDialog.FileName, "Conversacion");
             }
+                
         }
 
         private void Guardar_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -106,8 +111,11 @@ namespace Actividad_UT6_1
         {
             if (ChatBox.Text.Length > 0)
             {
-                conversacion.Add(new Usuario("assets/hombre.png", ChatBox.Text));
-                conversacion.Add(new Usuario("assets/robot.png", "No tengo ganas de hablar ahora"));
+                nuevaOpcion.IsEnabled = true;
+                nuevaButton.IsEnabled = true;
+
+                conversacion.Add(new Usuario(0,"assets/hombre.png", ChatBox.Text));
+                conversacion.Add(new Usuario((Usuario.Emisor)1,"assets/robot.png", "No tengo ganas de hablar ahora"));
 
                 ChatBox.Text = "";
             }

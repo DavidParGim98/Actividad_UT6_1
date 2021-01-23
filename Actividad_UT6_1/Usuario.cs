@@ -9,11 +9,16 @@ namespace Actividad_UT6_1
 {
     public class Usuario : INotifyPropertyChanged
     {
-        private string _nombre;
+        private Emisor _nombre;
         private string _imagen;
         private string _mensaje;
 
-        public string Nombre
+        public enum Emisor
+        {
+            Usuario, Robot
+        }
+
+        public Emisor Nombre
         {
             get => _nombre;
 
@@ -53,9 +58,9 @@ namespace Actividad_UT6_1
             }
         }
 
-        public Usuario(string imagen, string mensaje)
+        public Usuario(Emisor nombre, string imagen, string mensaje)
         {
-            Nombre = "Usuario";
+            Nombre = nombre;
             Imagen = imagen;
             Mensaje = mensaje;
         }

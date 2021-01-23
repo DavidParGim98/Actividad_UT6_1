@@ -30,10 +30,20 @@
                         CanExecute="Conexion_CanExecute"/>
     </Window.CommandBindings>
     
-    <!-- Estilos y Plantillas -->
+    
 
-    <!-- Plantillas -->
+    <!-- Estilos, Plantillas y Conversores -->
+
+    
     <Window.Resources>
+
+        <!-- Conversores -->
+
+        <local:ConversorFondo x:Key="conversorFondo"></local:ConversorFondo>
+        <local:ConversorLado x:Key="conversorLado"></local:ConversorLado>
+
+        <!-- Plantillas -->
+        
         <ControlTemplate x:Key="MessageBox" TargetType="{x:Type TextBox}">
             <Border x:Name="border" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                 <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
@@ -41,11 +51,11 @@
         </ControlTemplate>
 
         <DataTemplate DataType="{x:Type local:Usuario}">
-            <Border BorderBrush="Black" BorderThickness="1">
-                <DockPanel>
+            <Border HorizontalAlignment="{Binding Nombre, Converter={StaticResource conversorLado}}" Margin="25" CornerRadius="15" BorderBrush="Black" BorderThickness="2" Background="{Binding Nombre, Converter={StaticResource conversorFondo}}">
+                <DockPanel Margin="10">
                     <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-                        <Image Source="{Binding Imagen}" DockPanel.Dock="Left" />
-                        <TextBlock Text="{Binding Nombre}" DockPanel.Dock="Right" />
+                        <Image Width="25" Source="{Binding Imagen}" DockPanel.Dock="Left" />
+                        <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="{Binding Nombre}" DockPanel.Dock="Left" />
                     </DockPanel>
                     
                     <TextBlock Text="{Binding Mensaje}" />
@@ -68,7 +78,7 @@
 
         <Style TargetType="Image">
             <Setter Property="Width" Value="35" />
-        </Style>
+        </Style>        
     </Window.Resources>
     
     <!-- Interfaz app -->
@@ -77,7 +87,7 @@
         <!-- Menu -->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Archivo">
-                <MenuItem Header="Nueva conversación" InputGestureText="Ctrl+N" Command="local:CommandMenu.Nueva">
+                <MenuItem x:Name="nuevaOpcion" IsEnabled="False" Header="Nueva conversación" InputGestureText="Ctrl+N" Command="local:CommandMenu.Nueva">
                     <MenuItem.Icon >
                         <Image Source="assets/new.png"/>
                     </MenuItem.Icon>
@@ -117,7 +127,7 @@
         <!-- Toolbar -->
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button ToolTip="Nueva conversación" Command="local:CommandMenu.Nueva">
+                <Button x:Name="nuevaButton" IsEnabled="False" ToolTip="Nueva conversación" Command="local:CommandMenu.Nueva">
                     <Image Width="35" Source="assets/new.png" />
                 </Button>
 
@@ -156,9 +166,17 @@
         </DockPanel>
 
         <!-- Zona mensajes -->
-        <ItemsControl Background="LightGoldenrodYellow" x:Name="Chat" ItemsSource="{Binding}" 
-                      ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl Background="LightGoldenrodYellow" x:Name="Chat" ItemsSource="{Binding}">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel></StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
             
-        </ItemsControl>
+            </ItemsControl>
+        </ScrollViewer>
+        
     </DockPanel>
 </Window>

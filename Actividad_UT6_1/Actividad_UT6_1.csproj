@@ -56,6 +56,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CommandMenu.cs" />
+    <Compile Include="ConversorLado.cs" />
+    <Compile Include="ConversorFondo.cs" />
     <Compile Include="Usuario.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
