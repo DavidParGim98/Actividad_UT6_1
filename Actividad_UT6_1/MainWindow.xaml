@@ -28,6 +28,10 @@
         <CommandBinding Command="local:CommandMenu.Conexion"
                         Executed="Conexion_Executed"
                         CanExecute="Conexion_CanExecute"/>
+        
+        <CommandBinding Command="local:CommandMenu.Enviar"
+                        Executed="Enviar_Executed"
+                        CanExecute="Enviar_CanExecute"/>
     </Window.CommandBindings>
     
     
@@ -155,7 +159,7 @@
 
         <!-- ChatBox -->
         <DockPanel DockPanel.Dock="Bottom">
-            <Button DockPanel.Dock="Right" Click="Enviar_Click">
+            <Button DockPanel.Dock="Right" Command="local:CommandMenu.Enviar">
                 <Image Source="assets/send.png" />
             </Button>
             

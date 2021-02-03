@@ -63,5 +63,16 @@ namespace Actividad_UT6_1
                     new KeyGesture(Key.O, ModifierKeys.Control)
                 }
             );
+
+        public static readonly RoutedUICommand Enviar = new RoutedUICommand
+            (
+                "Enviar",
+                "Enviar",
+                typeof(CommandMenu),
+                new InputGestureCollection()
+                {
+                    new KeyGesture(Key.Enter)
+                }
+            );
     }
 }

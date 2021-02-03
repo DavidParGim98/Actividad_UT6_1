@@ -107,17 +107,22 @@ namespace Actividad_UT6_1
             e.CanExecute = true;
         }
 
-        private void Enviar_Click(object sender, RoutedEventArgs e)
+        private void Enviar_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (ChatBox.Text.Length > 0)
+            nuevaOpcion.IsEnabled = true;
+            nuevaButton.IsEnabled = true;
+
+            conversacion.Add(new Usuario(0, "assets/hombre.png", ChatBox.Text));
+            conversacion.Add(new Usuario((Usuario.Emisor)1, "assets/robot.png", "No tengo ganas de hablar ahora"));
+
+            ChatBox.Text = "";
+        }
+
+        private void Enviar_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (ChatBox != null && ChatBox.Text.Length > 0)
             {
-                nuevaOpcion.IsEnabled = true;
-                nuevaButton.IsEnabled = true;
-
-                conversacion.Add(new Usuario(0,"assets/hombre.png", ChatBox.Text));
-                conversacion.Add(new Usuario((Usuario.Emisor)1,"assets/robot.png", "No tengo ganas de hablar ahora"));
-
-                ChatBox.Text = "";
+                e.CanExecute = true;
             }
             
         }
